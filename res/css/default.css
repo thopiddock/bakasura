@@ -1,0 +1,26 @@
+h1 {
+    font-size: 3em;
+    font-weight: 500;
+}
+
+h2 {
+    font-size: 2.3em;
+    font-weight: 700;
+}
+
+h3 {
+    font-size: 1.4em;
+    font-weight: 700;
+}
+
+h4 {
+    font-weight: 400;
+}
+
+a {
+    color: black;
+}
+
+#errors {
+    margin-bottom: 1em;
+}
