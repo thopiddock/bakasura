@@ -194,10 +194,6 @@ ul.horizontal-list li
   overflow: auto;
 }
 
-.editable
-{
-}
-
 #errors
 {
   margin-bottom: 1em;
@@ -236,6 +232,17 @@ ul.horizontal-list li
   {
     margin: 0 auto;
     text-align: center;
+  }
+}
+
+.fragment-container
+{
+  position: relative;
+  .handle
+  {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 }
 
@@ -334,7 +341,7 @@ input, textarea, select
   &[type="file"]
   {
 
-    &:befor
+    &:before
     {
       content: 'Browse';
       background: #fff;
@@ -361,8 +368,6 @@ input, textarea, select
 fieldset.stacked
 {
   display: block;
-  margin: .25em 0;
-
   label, input, textarea, button
   {
     margin: .25em 0;
