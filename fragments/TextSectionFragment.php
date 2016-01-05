@@ -6,7 +6,7 @@
  * Date: 27/08/2015
  * Time: 13:54
  */
-class TextSectionFragment implements IFragment, IDatabaseLoadable
+class TextSectionFragment extends BaseSectionFragment implements IFragment, IDatabaseLoadable, IEditor, IAction
 {
     /**
      * @var string HTML content of the fragment.

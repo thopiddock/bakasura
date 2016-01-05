@@ -75,7 +75,7 @@ class Site
         }
         else
         {
-            $dynamicPages = DynamicPageHandler::ReadPages();
+            $dynamicPages = PageHandler::ReadPages();
             if ($dynamicPages != null)
             {
                 // Resolve the page type

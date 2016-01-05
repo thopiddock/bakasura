@@ -6,7 +6,7 @@
  * Date: 27/08/2015
  * Time: 14:00
  */
-class ImageSectionFragment implements IFragment, IDatabaseLoadable, IAction
+class ImageSectionFragment extends BaseSectionFragment implements IFragment, IDatabaseLoadable, IAction, IEditor
 {
     /**
      * @var string The image source.

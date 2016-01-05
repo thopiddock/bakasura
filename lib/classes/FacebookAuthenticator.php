@@ -14,11 +14,11 @@ class FacebookAuthenticator extends BaseAuthenticator
         $newFullname   = $this->getFullname();
         $newEmail      = $this->getEmail();
 
-        Site::$errorHandler->addError(new Error("ID: $newFacebookId NAME: $newFullname EMAIL: $newEmail ", ErrorSeverityEnum::Message));
+        Site::$errorHandler->addError(new SimpleError("ID: $newFacebookId NAME: $newFullname EMAIL: $newEmail ", ErrorSeverityEnum::Message));
 
         $exists  = false;
         $success = false;
-        $conn    = ConnectionHandler::getConnection();
+        $conn    = SqlConnection::getConnection();
         if ($conn)
         {
             $query = "CALL `readUser`(?);";
@@ -39,7 +39,7 @@ class FacebookAuthenticator extends BaseAuthenticator
                     }
                     else
                     {
-                        Site::$errorHandler->addError(new Error("Could not authenticate the user.", ErrorSeverityEnum::Error));
+                        Site::$errorHandler->addError(new SimpleError("Could not authenticate the user.", ErrorSeverityEnum::Error));
                     }
                 }
 
@@ -58,14 +58,14 @@ class FacebookAuthenticator extends BaseAuthenticator
 
                     if ($stmt->errno > 0)
                     {
-                        Site::$errorHandler->addError(new Error("SQL Error: $stmt->error", ErrorSeverityEnum::Error));
+                        Site::$errorHandler->addError(new SimpleError("SQL SimpleError: $stmt->error", ErrorSeverityEnum::Error));
                     }
 
                     $stmt->close();
 
                     if (!$success)
                     {
-                        Site::$errorHandler->addError(new Error("Could not update the user.", ErrorSeverityEnum::Error));
+                        Site::$errorHandler->addError(new SimpleError("Could not update the user.", ErrorSeverityEnum::Error));
                     }
                 }
             }
@@ -80,14 +80,14 @@ class FacebookAuthenticator extends BaseAuthenticator
 
                     if ($stmt->errno > 0)
                     {
-                        Site::$errorHandler->addError(new Error("SQL Error: $stmt->error", ErrorSeverityEnum::Error));
+                        Site::$errorHandler->addError(new SimpleError("SQL SimpleError: $stmt->error", ErrorSeverityEnum::Error));
                     }
 
                     $stmt->close();
 
                     if (!$success)
                     {
-                        Site::$errorHandler->addError(new Error("Could not create the user.", ErrorSeverityEnum::Error));
+                        Site::$errorHandler->addError(new SimpleError("Could not create the user.", ErrorSeverityEnum::Error));
                     }
                 }
             }
@@ -142,7 +142,7 @@ class FacebookAuthenticator extends BaseAuthenticator
         if ($this->getFacebookId())
         {
             $newFacebookId = $this->getFacebookId();
-            $conn          = ConnectionHandler::getConnection();
+            $conn          = SqlConnection::getConnection();
             if ($conn)
             {
                 $query = "CALL `readUser`(?);";
@@ -162,7 +162,7 @@ class FacebookAuthenticator extends BaseAuthenticator
                         }
                         else
                         {
-                            Site::$errorHandler->addError(new Error("Could not reauthenticate the user.", ErrorSeverityEnum::Error));
+                            Site::$errorHandler->addError(new SimpleError("Could not reauthenticate the user.", ErrorSeverityEnum::Error));
                         }
                     }
 

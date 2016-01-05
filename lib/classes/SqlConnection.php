@@ -1,6 +1,6 @@
 <?php
 
-class ConnectionHandler
+class SqlConnection
 {
     static function getConnection (ErrorHandler $errorHandler = null, $database = null)
     {
@@ -20,7 +20,7 @@ class ConnectionHandler
             {
                 if ($errorHandler)
                 {
-                    $errorHandler->addError(new Error($conn->connect_error, ErrorSeverityEnum::Error));
+                    $errorHandler->addError(new SimpleError($conn->connect_error, ErrorSeverityEnum::Error));
                 }
 
                 return null;

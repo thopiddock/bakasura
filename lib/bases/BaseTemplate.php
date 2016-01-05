@@ -128,6 +128,7 @@ abstract class BaseTemplate implements ITemplate
         $this->styleSheets[] = 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css';
         $this->scripts[] = 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js';
         $this->scripts[] = 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js';
+        $this->scripts[] = '//oss.maxcdn.com/jquery.form/3.50/jquery.form.min.js';
         $this->scripts[] = '/res/js/core.js';
         if (Site::GetAuthenticator()->getAuthenticationLevel() >= AuthenticationLevelEnum::Editor)
         {

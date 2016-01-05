@@ -25,14 +25,14 @@ class LoginFragment implements IFragment
                 catch (Facebook\Exceptions\FacebookResponseException $e)
                 {
                     // When Graph returns an error
-                    Site::$errorHandler->addError(new Error('Graph returned an error: ' . $e->getMessage(), ErrorSeverityEnum::Error));
+                    Site::$errorHandler->addError(new SimpleError('Graph returned an error: ' . $e->getMessage(), ErrorSeverityEnum::Error));
 
                     $content .= 'Could not login.';
                 }
                 catch (Facebook\Exceptions\FacebookSDKException $e)
                 {
                     // When validation fails or other local issues
-                    Site::$errorHandler->addError(new Error('Facebook SDK returned an error: ' . $e->getMessage(), ErrorSeverityEnum::Error));
+                    Site::$errorHandler->addError(new SimpleError('Facebook SDK returned an error: ' . $e->getMessage(), ErrorSeverityEnum::Error));
 
                     $content .= 'Could not login.';
                 }
@@ -42,15 +42,15 @@ class LoginFragment implements IFragment
                     if ($helper->getError())
                     {
                         header('HTTP/1.0 401 Unauthorized');
-                        Site::$errorHandler->addError(new Error('Error: ' . $helper->getError(), ErrorSeverityEnum::Error));
-                        Site::$errorHandler->addError(new Error('Error Code: ' . $helper->getErrorCode(), ErrorSeverityEnum::Error));
-                        Site::$errorHandler->addError(new Error('Error Reason: ' . $helper->getErrorReason(), ErrorSeverityEnum::Error));
-                        Site::$errorHandler->addError(new Error('Error Description: ' . $helper->getErrorDescription(), ErrorSeverityEnum::Error));
+                        Site::$errorHandler->addError(new SimpleError('SimpleError: ' . $helper->getError(), ErrorSeverityEnum::Error));
+                        Site::$errorHandler->addError(new SimpleError('SimpleError Code: ' . $helper->getErrorCode(), ErrorSeverityEnum::Error));
+                        Site::$errorHandler->addError(new SimpleError('SimpleError Reason: ' . $helper->getErrorReason(), ErrorSeverityEnum::Error));
+                        Site::$errorHandler->addError(new SimpleError('SimpleError Description: ' . $helper->getErrorDescription(), ErrorSeverityEnum::Error));
                     }
                     else
                     {
                         header('HTTP/1.0 400 Bad Request');
-                        Site::$errorHandler->addError(new Error('Bad request', ErrorSeverityEnum::Critical));
+                        Site::$errorHandler->addError(new SimpleError('Bad request', ErrorSeverityEnum::Critical));
                     }
                     break;
                 }
@@ -63,12 +63,12 @@ class LoginFragment implements IFragment
                     }
                     catch (Facebook\Exceptions\FacebookResponseException $e)
                     {
-                        Site::$errorHandler->addError(new Error('Graph returned an error: ' . $e->getMessage(), ErrorSeverityEnum::Error));
+                        Site::$errorHandler->addError(new SimpleError('Graph returned an error: ' . $e->getMessage(), ErrorSeverityEnum::Error));
                         break;
                     }
                     catch (Facebook\Exceptions\FacebookSDKException $e)
                     {
-                        Site::$errorHandler->addError(new Error('Facebook SDK returned an error: ' . $e->getMessage(), ErrorSeverityEnum::Error));
+                        Site::$errorHandler->addError(new SimpleError('Facebook SDK returned an error: ' . $e->getMessage(), ErrorSeverityEnum::Error));
                         break;
                     }
 
@@ -81,7 +81,7 @@ class LoginFragment implements IFragment
                     $authenticated = $facebookAuth->authenticate();
                     if (!$authenticated)
                     {
-                        Site::$errorHandler->addError(new Error("Could not authenticate the user.", ErrorSeverityEnum::Error));
+                        Site::$errorHandler->addError(new SimpleError("Could not authenticate the user.", ErrorSeverityEnum::Error));
                     }
                 }
 

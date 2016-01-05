@@ -6,55 +6,12 @@
  * Date: 05/09/2015
  * Time: 02:08
  */
-class CreateFragment implements IFragment, IEditor, IAction
+class CreateFragment implements IFragment, IEditor
 {
     /**
      * @var int The page ID for the parent page.
      */
     private $pageId;
-
-    /**
-     * Process an action via GET/POST.
-     *
-     * @param $action string
-     * @param $vars   string|array
-     *
-     * @return string Json string representing the response.
-     */
-    static function processAction($action, $vars)
-    {
-        $success = false;
-        $fragmentData = null;
-        $response = ['success' => $success];
-        switch ($action)
-        {
-            case 'create':
-                $result = DynamicPageHandler::CreateFragment($vars['pageId'],
-                    $vars['index'],
-                    $vars['type'],
-                    $vars['header'],
-                    $vars['content'],
-                    $vars['media'],
-                    $vars['options']);
-                if ($result)
-                {
-                    $success = true;
-                    $fragmentData = DynamicPageHandler::ReadFragment($result);
-                    $fragmentClass = $fragmentData['type'] . 'Fragment';
-                    if (class_exists($fragmentClass) && in_array('IDatabaseLoadable', class_implements($fragmentClass)))
-                    {
-                        /* @@var $fragmentClass IDatabaseLoadable */
-                        /* @@var $returnFragment IFragment */
-                        $returnFragment = $fragmentClass::generateFromDatabase($fragmentData);
-                        $response = ['success' => $success, 'fragment' => $returnFragment->getContent()];
-                    }
-                }
-
-                break;
-        }
-
-        return $response;
-    }
 
     /**
      * @return mixed
@@ -68,7 +25,6 @@ class CreateFragment implements IFragment, IEditor, IAction
                 <legend>Create a Fragment</legend>
                 <label for="fragment_type">Fragment Type</label>
                 <select title="Fragment Type"
-                        id="fragment_type"
                         name="fragment_type">
                     <option value="TextSection">Text Section</option>
                     <option value="ImageSection">Image Section</option>
@@ -77,14 +33,12 @@ class CreateFragment implements IFragment, IEditor, IAction
                     <label for="fragment_header">Header</label>
                     <input type="text"
                            title="Header"
-                           id="fragment_header"
                            name="fragment_header"
                            value="">
                 </span>
                 <span>
                     <label for="fragment_content">Content</label>
                     <textarea title="Content"
-                              id="fragment_content"
                               name="fragment_content"></textarea>
                 </span>
 
@@ -92,7 +46,6 @@ class CreateFragment implements IFragment, IEditor, IAction
                     <label for="fragment_media">Media</label>
                     <input type="file"
                            title="Media"
-                           id="fragment_media"
                            name="fragment_media"/>
                     <span id="progressbar"></span>
                 </div>
@@ -166,18 +119,19 @@ class CreateFragment implements IFragment, IEditor, IAction
                 event.preventDefault();
                 var form = $(this), url = form.attr("action");
 
+                var type = form.find('select[name=fragment_type]').val();
                 var json = {
-                    'pageId': $('input[name=fragment_pageId').val(),
-                    'index': $('input[name=fragment_index').val(),
-                    'type': $('select[name=fragment_type').val(),
-                    'header': $('input[name=fragment_header]').val(),
-                    'content': $('textarea[name=fragment_content]').val(),
-                    'media': $('input[name=fragment_media]').val(),
-                    'options': $('input[name=fragment_options]').val()
+                    'pageId': form.find('input[name=fragment_pageId]').val(),
+                    'index': form.find('input[name=fragment_index]').val(),
+                    'type': type,
+                    'header': form.find('input[name=fragment_header]').val(),
+                    'content': form.find('textarea[name=fragment_content]').val(),
+                    'media': form.find('input[name=fragment_media]').val(),
+                    'options': form.find('input[name=fragment_options]').val()
                 };
 
                 var posting = $.post(url, {
-                    performer: 'CreateFragment',
+                    performer: type+'Fragment',
                     action: 'create',
                     vars: json
                 });

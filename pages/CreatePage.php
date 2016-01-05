@@ -19,9 +19,9 @@ class CreatePage implements IPage, IEditor, IAction
         $success = false;
         $response = ['success' => $success];
         switch ($action) {
-            case 'create':
+            case 'update':
 
-                $success = DynamicPageHandler::CreatePage($vars['name'],
+                $success = PageHandler::CreatePage($vars['name'],
                     $vars['shortName'],
                     $vars['scriptLink'],
                     $vars['styleLink'],
