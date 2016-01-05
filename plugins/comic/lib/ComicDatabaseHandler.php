@@ -15,7 +15,7 @@ class ComicDatabaseHandler
     static function ReadPage($chapter, $number)
     {
         $returnArray = null;
-        $conn        = ConnectionHandler::getConnection(Site::$errorHandler);
+        $conn        = SqlConnection::getConnection(Site::$errorHandler);
 
         if ($conn)
         {
@@ -51,7 +51,7 @@ class ComicDatabaseHandler
     static function ReadPageNavigation($orderNumber)
     {
         $returnArray = null;
-        $conn        = ConnectionHandler::getConnection();
+        $conn        = SqlConnection::getConnection();
 
         if ($conn)
         {
@@ -83,7 +83,7 @@ class ComicDatabaseHandler
     static function ReadLatestPage()
     {
         $returnPage = null;
-        $conn       = ConnectionHandler::getConnection();
+        $conn       = SqlConnection::getConnection();
 
         if ($conn)
         {
@@ -120,7 +120,7 @@ class ComicDatabaseHandler
         $success = false;
         if (Site::GetAuthenticator()->getAuthenticationLevel() >= AuthenticationLevelEnum::Editor)
         {
-            $conn = ConnectionHandler::getConnection();
+            $conn = SqlConnection::getConnection();
             if ($conn)
             {
                 $query = "CALL `comic_updatePageDetails`(?, ?, ?, ?);";
@@ -148,7 +148,7 @@ class ComicDatabaseHandler
         $success = false;
         if (Site::GetAuthenticator()->getAuthenticationLevel() >= AuthenticationLevelEnum::Editor)
         {
-            $conn = ConnectionHandler::getConnection();
+            $conn = SqlConnection::getConnection();
             if ($conn)
             {
                 $query = "CALL `comic_deletePage`(?);";

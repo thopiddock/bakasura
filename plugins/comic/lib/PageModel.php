@@ -57,6 +57,7 @@ class PageModel
     public function updatePageDetails($title, $description, $image)
     {
         $result = ComicDatabaseHandler::UpdatePageDetails($this->id, $title, $description, $image );
+        return $result;
     }
 
     public function initialise()

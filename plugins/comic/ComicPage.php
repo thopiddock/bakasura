@@ -153,7 +153,7 @@ class ComicPage implements IPage, IEditor
 
                         if (!ComicDatabaseHandler::UpdatePageDetails($comicId, $title, $description, $image))
                         {
-                            Site::$errorHandler->addError(new Error('Unable to update the comic page', ErrorSeverityEnum::Error));
+                            Site::$errorHandler->addError(new SimpleError('Unable to update the comic page', ErrorSeverityEnum::Error));
                         }
                     }
                 }
