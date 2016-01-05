@@ -58,12 +58,25 @@ class DynamicPage implements IPage, IEditor
         }
         else
         {
-            $index = 0;
             foreach ($this->fragments as $fragment)
             {
                 /* @var $fragment IFragment */
-                $content .= $fragment->getContent($index);
-                $index++;
+                if (Site::GetAuthenticator()->getAuthenticationLevel() >= AuthenticationLevelEnum::Editor)
+                {
+                    if (in_array('IEditor', class_implements($fragment)))
+                    {
+                        /* @var $fragment IEditor|IFragment */
+                        $content .= $fragment->getEditor();
+                    }
+                    else
+                    {
+                        $content .= $fragment->getContent();
+                    }
+                }
+                else
+                {
+                    $content .= $fragment->getContent();
+                }
             }
         }
 
@@ -124,7 +137,7 @@ class DynamicPage implements IPage, IEditor
         $this->fragments = [];
 
         // Return fragments from SQL
-        $fragments = DynamicPageHandler::ReadPageFragments($this->page['id']);
+        $fragments = FragmentHandler::ReadPageFragments($this->page['id']);
 
         // Parse fragments
         if (count($fragments) > 0)

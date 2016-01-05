@@ -43,7 +43,7 @@ class CreatePage implements IPage, IEditor, IAction
     {
         header('HTTP/1.0 404 Not Found');
 
-        $textSectionFragment = new TextSectionFragment('404 Error, nothing here yet.', 'Someone should create a page of something...');
+        $textSectionFragment = new TextSectionFragment('404 SimpleError, nothing here yet.', 'Someone should create a page of something...');
         $content = $textSectionFragment->getContent();
 
         return $content;

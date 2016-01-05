@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class Error
+ * Class SimpleError
  */
-class Error implements IError
+class SimpleError implements IError
 {
     protected $message;
     protected $severity;

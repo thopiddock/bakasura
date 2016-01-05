@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class Config class is responsible for
+ */
 class Config
 {
     private static $instance;

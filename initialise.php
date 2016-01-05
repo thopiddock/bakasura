@@ -68,7 +68,7 @@ addRequired($requireFiles, LIB_DIR . 'interfaces/', 'I*.php');
 addRequired($requireFiles, LIB_DIR . 'bases/', 'Base*.php');
 addRequired($requireFiles, LIB_DIR . 'enumerators/', '*Enum.php');
 addRequired($requireFiles, LIB_DIR . 'classes/', '*.php');
-addRequired($requireFiles, LIB_DIR . 'errors/', '*Error.php');
+addRequired($requireFiles, LIB_DIR . 'errors/', '*SimpleError.php');
 addRequired($requireFiles, FRAGMENTS_DIR, '*Fragment.php');
 addRequired($requireFiles, PAGES_DIR, '*Page.php');
 addRequired($requireFiles, TEMPLATES_DIR, '*Template.php');

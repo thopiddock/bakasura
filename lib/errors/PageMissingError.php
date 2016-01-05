@@ -3,7 +3,7 @@
 /**
  * Class PageMissingError
  */
-class PageMissingError extends Error
+class PageMissingError extends SimpleError
 {
     public function __construct ($pageName)
     {

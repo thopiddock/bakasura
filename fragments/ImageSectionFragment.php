@@ -11,23 +11,27 @@ class ImageSectionFragment extends BaseSectionFragment implements IFragment, IDa
     /**
      * @var string The image source.
      */
-    private $_imageSrc;
+    private $imageSrc;
     /**
      * @var string The image class.
      */
-    private $_imageClass;
+    private $imageClass;
     /**
      * @var string | null The content text.
      */
-    private $_text;
+    private $text;
     /**
      * @var string | null The header.
      */
-    private $_header;
+    private $header;
     /**
      * @var int | null The id.
      */
-    private $_id;
+    private $id;
+    /**
+     * @var null
+     */
+    private $index;
 
     /**
      * @param $databaseValue
@@ -35,7 +39,13 @@ class ImageSectionFragment extends BaseSectionFragment implements IFragment, IDa
      */
     public static function generateFromDatabase($databaseValue)
     {
-        return new ImageSectionFragment($databaseValue['media'], $databaseValue['options'], $databaseValue['content'], $databaseValue['header'], $databaseValue['id']);
+        return new ImageSectionFragment(
+            $databaseValue['media'],
+            $databaseValue['options'],
+            $databaseValue['id'],
+            $databaseValue['index'],
+            $databaseValue['header'],
+            $databaseValue['content']);
     }
 
     /**
@@ -50,10 +60,12 @@ class ImageSectionFragment extends BaseSectionFragment implements IFragment, IDa
         switch ($action)
         {
             case 'create':
-                $content = 'Stuff';
+                self::processActionCreate($vars, $response);
                 break;
-            case 'update':
 
+            case 'update':
+                self::processActionUploadFile();
+                self::processActionUpdate($vars, $response);
                 break;
         }
 
@@ -67,30 +79,24 @@ class ImageSectionFragment extends BaseSectionFragment implements IFragment, IDa
      */
     function getContent()
     {
-        $content = '<section class="image-section""';
-        if (isset($this->_id))
-        {
-            $content .= ' data-id="' . $this->_id . '"';
-        }
+        $content = '<section class="fragment-content image-section">';
+        $content .= '<img src="' . $this->imageSrc . '" ';
 
-        $content .= '>';
-        $content .= '<img src="' . $this->_imageSrc . '" ';
-
-        if (isset($this->_imageClass))
+        if (isset($this->imageClass))
         {
-            $content .= 'class="' . $this->_imageClass . '" ';
+            $content .= 'class="' . $this->imageClass . '" ';
         }
 
         $content .= '/>';
 
-        if (isset($this->_header))
+        if (isset($this->header))
         {
-            $content .= '<h3>' . $this->_header . '</h3>';
+            $content .= '<h3>' . $this->header . '</h3>';
         }
 
-        if (isset($this->_text))
+        if (isset($this->text))
         {
-            $content .= '<p>' . $this->_text . '</p>';
+            $content .= '<p>' . $this->text . '</p>';
         }
 
         $content .= '</section>';
@@ -98,17 +104,41 @@ class ImageSectionFragment extends BaseSectionFragment implements IFragment, IDa
         return $content;
     }
 
+    /**
+     * @return string
+     */
     function getDisplayName()
     {
         return "Image Section";
     }
 
-    public function __construct($imageSrc, $imageClass, $text = null, $header = null, $id = null)
+    /**
+     * Get HTML to represent an editor section.
+     *
+     * @return string
+     */
+    function getEditor()
     {
-        $this->_imageSrc = $imageSrc;
-        $this->_imageClass = $imageClass;
-        $this->_text = $text;
-        $this->_header = $header;
-        $this->_id = $id;
+       return $this->getContent();
+    }
+
+    /**
+     * ImageSectionFragment constructor.
+     *
+     * @param      $imageSrc
+     * @param      $imageClass
+     * @param null $id
+     * @param null $index
+     * @param null $header
+     * @param null $text
+     */
+    public function __construct($imageSrc, $imageClass, $id = null, $index = null, $header = null, $text = null)
+    {
+        $this->imageSrc = $imageSrc;
+        $this->imageClass = $imageClass;
+        $this->id = $id;
+        $this->index = $index;
+        $this->header = $header;
+        $this->text = $text;
     }
 }
